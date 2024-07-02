@@ -10,7 +10,7 @@ class AllPage {
   static final pages = [
     GetPage(
       name: RoutedName.userpage,
-      page: () => UserPage(),
+      page: () => const UserPage(),
     ),
     GetPage(
       name: RoutedName.adduserpage,

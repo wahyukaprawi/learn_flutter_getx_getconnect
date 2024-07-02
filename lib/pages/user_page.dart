@@ -5,11 +5,11 @@ import 'package:learn_flutter_getx_getconnect/routes/route_name.dart';
 import '../controllers/user_controller.dart';
 
 class UserPage extends StatelessWidget {
-  final userC = Get.put(UserController());
-  UserPage({super.key});
+  const UserPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userC = Get.find<UserController>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("All Users"),
