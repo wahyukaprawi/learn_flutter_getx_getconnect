@@ -17,20 +17,24 @@ class UserController extends GetxController {
 
   void add(String name, String email, String phone) {
     if (name != '' && email != '' && phone != '') {
-      if (email.contains("@")) {
-        UserProvider().postData(name, email, phone).then(
-          (value) {
-            users.add(
-              User(
-                id: value.body["name"].toString(),
-                name: name,
-                email: email,
-                phone: phone,
-              ),
-            );
-          },
-        );
-        Get.back();
+      if (GetUtils.isEmail(email)) {
+        if (GetUtils.isPhoneNumber(phone)) {
+          UserProvider().postData(name, email, phone).then(
+            (value) {
+              users.add(
+                User(
+                  id: value.body["name"].toString(),
+                  name: name,
+                  email: email,
+                  phone: phone,
+                ),
+              );
+            },
+          );
+          Get.back();
+        } else {
+          snackBarError("Masukan no telephone valid");
+        }
       } else {
         snackBarError("Masukan email valid");
       }
@@ -45,17 +49,21 @@ class UserController extends GetxController {
 
   void edit(String id, String name, String email, String phone) {
     if (name != '' && email != '' && phone != '') {
-      if (email.contains("@")) {
-        UserProvider().editData(id, name, email, phone).then(
-          (_) {
-            final user = userById(id);
-            user.name = name;
-            user.email = email;
-            user.phone = phone;
-            users.refresh();
-            Get.back();
-          },
-        );
+      if (GetUtils.isEmail(email)) {
+        if (GetUtils.isPhoneNumber(phone)) {
+          UserProvider().editData(id, name, email, phone).then(
+            (_) {
+              final user = userById(id);
+              user.name = name;
+              user.email = email;
+              user.phone = phone;
+              users.refresh();
+              Get.back();
+            },
+          );
+        } else {
+          snackBarError("Masukan no telephone valid");
+        }
       } else {
         snackBarError("Masukan email valid");
       }
